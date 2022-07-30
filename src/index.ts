@@ -1,8 +1,9 @@
-import { Client, Partials } from "discord.js";
+import { Client, Message, Partials } from "discord.js";
 import "dotenv/config";
 import triggers from "./triggers.json";
 import { randomVerseEmbed } from "./verse";
 
+// Create client
 console.log("Starting...");
 const client = new Client({
   intents: ["DirectMessages", "GuildMessages", "Guilds", "MessageContent"],
@@ -27,15 +28,26 @@ client.on("messageCreate", msg => {
     return;
   }
 
-  // Reply
-  const content = msg.content.toLowerCase();
+  // Reply if mentioned
+  if (msg.mentions.has(client.user!)) {
+    activate(msg, "@QuranBot");
+    return;
+  }
+
+  // Reply if contains trigger word
   for (var i = 0; i < triggers.length; i++) {
-    if (content.includes(triggers[i])) {
-      msg.reply({ embeds: [randomVerseEmbed(triggers[i])] });
-      console.log("+1 Supporter of Allah !");
+    if (msg.content.toLowerCase().includes(triggers[i])) {
+      activate(msg, triggers[i]);
+      return;
     }
   }
 });
 
 // Login
 client.login(process.env.BOT_TOKEN);
+
+// Activate reply to message
+function activate(msg: Message, trigger?: string): void {
+  msg.reply({ embeds: [randomVerseEmbed(trigger)] });
+  console.log("+1 Supporter of Allah!");
+}
