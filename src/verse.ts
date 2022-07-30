@@ -15,7 +15,9 @@ export type verse = {
 export function formatVerse(verse: verse, trigger?: string): EmbedBuilder {
   return new EmbedBuilder()
     .setColor(0xf03036)
-    .setAuthor({ name: "The Holy Quran | QuranBot" })
+    .setAuthor({
+      name: "The Holy Quran | QuranBot",
+    })
     .setTitle(`[${verse.id[0] + 1}:${verse.id[1] + 1}]`)
     .setDescription(verse.en)
     .addFields(
