@@ -1,4 +1,4 @@
-import { Client } from "discord.js";
+import { Client, Partials } from "discord.js";
 import "dotenv/config";
 import triggers from "./triggers.json";
 import { randomVerseEmbed } from "./verse";
@@ -6,6 +6,7 @@ import { randomVerseEmbed } from "./verse";
 console.log("Starting...");
 const client = new Client({
   intents: ["DirectMessages", "GuildMessages", "Guilds", "MessageContent"],
+  partials: [Partials.Channel],
 });
 
 // Once ready
